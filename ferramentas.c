@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "include/ferramentas.h"
 
 /*
@@ -76,7 +77,7 @@ int buscaLisAluno2(tAluno lista[], int n, char chave[])
     i++;
   }
   return i;
-}
+} //O(n)
 
 /* 
 Implementação ecursiva da função:
@@ -134,7 +135,7 @@ int buscaLisAlunoOrd(tAluno lista[], int n, char chave[], int* achou)
 	if((strcmp(lista[i].numMatricula, chave) == 0) && (i < n))
 		*achou = TRUE;
   return i;
-}
+} // O(n)
 
 /* 
 Implementação ecursiva da função:
@@ -203,7 +204,7 @@ int buscaLisAlunoBin(tAluno lista[], int n, char chave[], int* achou)
 		} 
 	}
 	return i;
-}
+} //O(log_2(n))
 
 /* 
 Implementação ecursiva da função:
@@ -243,10 +244,11 @@ void incLisAluno(tAluno aluno, tAluno lista[], int n)
 int incLisAlunoOrd(tAluno aluno, tAluno lista[], int n)
 {
 	int achou;
-	int i = buscaLisAlunoOrd(lista, n, aluno.numMatricula, &achou);
+	//int i = buscaLisAlunoOrd(lista, n, aluno.numMatricula, &achou);
 	//achou = FALSE;
 	//strcpy(lista[n].numMatricula, aluno.numMatricula);
 	//int i = buscaLisAlunoOrdRec(lista, n, aluno.numMatricula, &achou);
+	int i = buscaLisAlunoBin(lista, n, aluno.numMatricula, &achou);
 	if (i == n){
 		strcpy(lista[n].numMatricula, aluno.numMatricula);
 		strcpy(lista[n].nome, aluno.nome);
@@ -295,19 +297,55 @@ void printItemLisAluno(tAluno lista[], int n)
 	printf(" ]\n");
 } 
   
-int algoritmo(int n)
-{	
-	int y1 = 0;
-	int y2 = 0;
-	int y;
-	if (n == 1 || n == 2){
-		return 0;
-	}else{
-		for(int i = 3; i <= n; i++){
-			y = 2*y2 + y1 + i; //yn = 2yn-1 + yn-2 + n n=i
-			y1 = y2;
-			y2 = y;
-		}
-		return y;
-	}
+
+void iniListAlunos(tListAlunos* list, int cap)
+{
+	list->cap = cap;
+	list->tam = 0;
+	list->lista = (tAluno*) malloc((cap+1)*sizeof(tAluno));
 }
+
+int buscaNaoOrdenada(tListAlunos list, char chave[]){
+
+	//retorna o indice onde achou 
+
+}
+
+int incNaoOrdenada(tAluno aluno, tListAlunos list){
+	
+	// Retorna TRUE ou FALSE
+	// FALSE: Se o aluno já estiver na lista ou se a 
+	// lista já estiver cheia
+
+}
+
+int remNaoOrdenada(tAluno aluno, tListAlunos list){
+
+	// Retorna TRUE ou FALSE
+	// FALSE: Se o aluno não estiver na lista ou se a 
+	// lista já estiver vazia
+
+}
+
+int buscaOrdenada(tListAlunos list, char chave[], int* achou){
+
+	//retorna o indice onde achou 
+
+}
+
+int incOrdenada(tAluno aluno, tListAlunos list){
+	
+	// Retorna TRUE ou FALSE
+	// FALSE: Se o aluno já estiver na lista ou se a 
+	// lista já estiver cheia
+
+}
+
+int remOrdenada(tAluno aluno, tListAlunos list){
+
+	// Retorna TRUE ou FALSE
+	// FALSE: Se o aluno não estiver na lista ou se a 
+	// lista já estiver vazia
+
+}
+
