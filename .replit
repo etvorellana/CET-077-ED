@@ -1,0 +1,2 @@
+language = "bash"
+run = "make all; ./make run"
