@@ -25,11 +25,18 @@ int buscaLisAlunoOrd(tAluno lista[], int n, char chave[], int* achou);
 int buscaLisAlunoOrdRec(tAluno lista[], int n, char chave[], int* achou);
 int buscaLisAlunoBin(tAluno lista[], int n, char chave[], int* achou);
 int buscaLisAlunoBinRec(tAluno lista[], int n, char chave[], int* achou);
-
 int incLisAlunoOrd(tAluno aluno, tAluno lista[], int n);
 
 void printLisAluno(tAluno lista[], int n);
 void printItemLisAluno(tAluno lista[], int n);
+
+void iniListAlunos(tListAlunos* list, int cap);
+int buscaNaoOrdenada(tListAlunos list, char chave[]);
+int incNaoOrdenada(tAluno aluno, tListAlunos* list);
+int remNaoOrdenada(tAluno aluno, tListAlunos* list);
+int buscaOrdenada(tListAlunos list, char chave[], int* achou);
+int incOrdenada(tAluno aluno, tListAlunos* list);
+int remOrdenada(tAluno aluno, tListAlunos* list);
 
 typedef struct{
 	int lsize;			// capacidade da lista (tamanho do array)
