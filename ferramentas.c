@@ -306,11 +306,11 @@ void iniListAlunos(tListAlunos* list, int cap)
 }
 
 //retorna o indice onde achou
-int buscaNaoOrdenada(tListAlunos list, char chave[]){
+int buscaNaoOrdenada(tListAlunos* list, char chave[10]){
 	int i = 0;
-  int n = list.tam;
-	strcpy(list.lista[n].numMatricula, chave); // adicionando chave no final
-  while(strcmp(list.lista[i].numMatricula, chave) != 0){
+  int n = list->tam;
+	strcpy(list->lista[n].numMatricula, chave); // adicionando chave no final
+	while(strcmp(list->lista[i].numMatricula, chave) != 0){
     i++;
   }
   return i; 
@@ -336,7 +336,7 @@ int incNaoOrdenada(tAluno aluno, tListAlunos* list){
 // FALSE: Se o aluno não estiver na lista ou se a 
 // lista já estiver vazia
 int remNaoOrdenada(tAluno aluno, tListAlunos* list){
-	int n = list.tam;																						// n é o tamanho da lista
+	int n = list->tam;																						// n é o tamanho da lista
 	if (n > 0){																										// se a lista não estiver vazia
 		int i = buscaNaoOrdenada(list, aluno.numMatricula);					// procuro na lista
 		if (i < n){																									// se achei na lista
@@ -352,14 +352,14 @@ int remNaoOrdenada(tAluno aluno, tListAlunos* list){
 }
 
 //retorna o indice onde achou 
-int buscaOrdenada(tListAlunos list, char chave[], int* achou){
+int buscaOrdenada(tListAlunos* list, char chave[], int* achou){
 	int min = 0;			
-	int max = lista.tam;			
+	int max = list->tam;			
 	int i;
 	*achou = FALSE;
 	while (min != max){
 		i = (max + min)/2; 
-		int com = strcmp(lista.lista[i].numMatricula, chave); 
+		int com = strcmp(list->lista[i].numMatricula, chave); 
 		if ( com < 0){
 			min = ++i; 
 		}else{ 
@@ -377,8 +377,8 @@ int buscaOrdenada(tListAlunos list, char chave[], int* achou){
 // Retorna TRUE ou FALSE
 // FALSE: Se o aluno já estiver na lista ou se a 
 // lista já estiver cheia
-int incOrdenada(tAluno aluno, tListAlunos* list){
-	int achou;
+int incOrdenada(tAluno aluno, tListAlunos list){
+	int achou; 
   int n = list->tam;																						// n é o tamanho da lista
 	if (n < list->cap){ 																					// se a lista não estiver cheia
 		int i = buscaOrdenada(list, aluno.numMatricula, &achou);		// procuro na lista

@@ -1,2 +1,2 @@
 language = "bash"
-run = "make all; ./make run"
+run = "make all; make run"
