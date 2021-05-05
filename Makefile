@@ -1,7 +1,9 @@
 CC = gcc
 CFLAGS = -O2 -lm -fopenmp
 
-all: 	./bin/exemplo_00 ./bin/exemplo_01 ./bin/exemplo_02 ./bin/exemplo_03 ./bin/exemplo_04 ./bin/exemplo_05 ./bin/exemplo_06 ./bin/exemplo_07 ./bin/exemplo_08
+all: 	./bin/exemplo_00 ./bin/exemplo_01 ./bin/exemplo_02 ./bin/exemplo_03 //
+		./bin/exemplo_04 ./bin/exemplo_05 ./bin/exemplo_06 ./bin/exemplo_07 //
+		./bin/exemplo_08
 
 run: all
 	./bin/exemplo_08
