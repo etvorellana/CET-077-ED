@@ -507,7 +507,6 @@ int iniPilhaAlunos(tPilhaAlunos* pilha, int cap){
 	pilha->pilha = (tAluno*) malloc(sizeof(tAluno)*cap);
 	return 0;
 }
-
 int incPilhaAlunos(tAluno aluno, tPilhaAlunos* pilha){
 	if(pilha->topo < pilha->cap)
 	{
@@ -520,7 +519,6 @@ int incPilhaAlunos(tAluno aluno, tPilhaAlunos* pilha){
 		return 0;
 	}
 }
-
 int remPilhaAlunos(tAluno* aluno, tPilhaAlunos* pilha){
 	if(pilha->topo > 0)
 	{
@@ -556,7 +554,7 @@ int incFilaAlunos(tAluno aluno, tFilaAlunos* fila){
 int remFilaAlunos(tAluno* aluno, tFilaAlunos* fila){
 	if(fila->ini < fila->fim)
 	{
-		int bpos = fila->ini%fila->cap;
+		int pos = fila->ini%fila->cap;
 		strcpy(aluno->numMatricula, fila->fila[pos].numMatricula);
 		strcpy(aluno->nome, fila->fila[pos].nome);
 		strcpy(aluno->email, fila->fila[pos].email);
