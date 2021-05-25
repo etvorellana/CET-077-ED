@@ -564,3 +564,162 @@ int remFilaAlunos(tAluno* aluno, tFilaAlunos* fila){
 		return 0;
 	}
 }
+
+void geraAlunos(tListAlunos* lista){
+	unsigned int matricula;
+	tAluno aluno;
+	while(lista->tam < lista->cap){
+		matricula = (2017 + random()%5)*100000 + random()%100000; 
+		itoa(matricula, aluno.numMatricula);
+  		strcpy(aluno.nome, "Nome SobrenomeM SobrenomeP");
+  		strcpy(aluno.email,"NSmSp@uesc.br");
+		incNaoOrdenada(aluno, lista);
+	}
+}
+
+void  itoa ( unsigned int value, char * str){
+	char numArray[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+	for (int i = 8; i >= 0; i--){
+		str[i] = numArray[value % 10];
+		value /=10; 
+	}
+	str[9] = '\0';
+}
+
+// Cria umk pontero para o head de uma lista simplesmente encadeada
+PONT iniListaEncAluno(void){
+	PONT head;
+    head = (PONT) malloc(sizeof(NOALUNO)); // Neste nó não guardamos informação
+	head->prox = NULL; // A lista esta vazia
+	return head;
+}
+
+// Criando uma lista simplesmente encadeada com base numa lista sequencial
+PONT conListSeq2ListEnc(tListAlunos* listaS){
+	PONT head = NULL, tail; 
+	head = iniListaEncAluno(); //Criamos uma lsita encadeada vazia
+	if (listaS->tam > 0){ // Se a lista seq não estiver vazia 
+		tail = head;
+		for(int i = 0; i < listaS->tam; i++){ // preenchemos com os elementos
+			tail->prox = (PONT)malloc(sizeof(NOALUNO));
+			tail = tail->prox;
+			strcpy(tail->numMatricula, listaS->lista[i].numMatricula);
+    		strcpy(tail->nome, listaS->lista[i].nome);
+    		strcpy(tail->email,listaS->lista[i].email);
+		}
+		tail->prox = NULL;
+	}
+	return head;	
+}
+
+void printListaEncAluno(PONT head){
+	PONT tail = head;
+	printf("[\n");
+	while(tail->prox != NULL){
+		tail = tail->prox;
+		printf("%s, ", tail->numMatricula);
+		printf("%s, ", tail->nome);
+		printf("%s\n", tail->email);
+	}
+	printf(" ]\n");
+}
+
+void printListaEncAluno2(tListEncAlunos lista){
+	PONT tail = lista.head;
+	printf("[\n");
+	while(tail->prox != lista.tail){
+		tail = tail->prox;
+		printf("%s, ", tail->numMatricula);
+		printf("%s, ", tail->nome);
+		printf("%s\n", tail->email);
+	}
+	printf(" ]\n");
+}
+
+PONT buscaListaEncNaoOrdAluno(PONT head, char chave[10]){
+	PONT tail = head;
+	while(tail->prox != NULL){
+		if (strcmp(tail->prox->numMatricula, chave) == 0)
+			break;
+		tail = tail->prox;
+	}
+	return tail->prox;
+}
+
+void ini_tListEncAlunos(tListEncAlunos* lista){
+	lista->head = iniListaEncAluno();
+	lista->tail = iniListaEncAluno();
+	lista->head->prox = lista->tail; // Lista vazia head.prox = tail 
+}
+
+PONT busca_tListEncAlunos(tListEncAlunos lista, char chave[10]){
+
+	PONT tail = lista.tail;
+	strcpy(tail->numMatricula, chave);
+	tail = lista.head; 
+	while(strcmp(tail->prox->numMatricula, chave) != 0){
+		tail = tail->prox;
+	}
+	if (tail->prox == lista.tail){
+		return NULL;
+	}else{
+		return tail->prox;
+	}
+}
+
+int inc_tListEncAlunos(tListEncAlunos lista, tAluno aluno){
+
+
+}
+
+
+
+/*
+//head->prox = (PONT)malloc(sizeof(NOALUNO));
+		//tail =  head->prox;
+		//strcpy(tail->numMatricula, listaS->lista[0].numMatricula);
+    	//strcpy(tail->nome, listaS->lista[0].nome);
+    	//strcpy(tail->email,listaS->lista[0].email);
+		//tail = tail->prox;
+PONT buscaNaoOrdenada_R(PONT head, char chave[10]){
+	PONT lista = head;
+	if (lista->prox == NULL){
+		return lista;
+	}else{
+		int com = strcmp(lista->numMatricula, chave);
+		if (com == 0)
+			return lista;
+		else 
+			return(lista->prox, chave);
+	}
+}
+
+PONT buscaNaoOrdenada_(PONT head, char chave[10], int* achou){
+	PONT lista = head;
+	while(lista != NULL){
+		int com = strcmp(lista->numMatricula, chave);
+		if (com == 0)
+			return lista;
+		else 
+			lista = lista->prox;
+	}
+	return lista;
+}
+
+int incNaoOrdenada_(tAluno aluno, PONT head){
+	PONT lista = head;
+	lista = buscaNaoOrdenada_(lista, aluno.numMatricula);
+	if(lista != NULL){
+
+	}
+
+
+}
+
+int remNaoOrdenada_(tAluno aluno, PONT head);
+
+int buscaOrdenada_(PONT head, char chave[10], int* achou);
+int incOrdenada_(tAluno aluno, PONT head);
+int remOrdenada_(tAluno aluno, PONT head);
+
+*/
