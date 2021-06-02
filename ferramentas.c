@@ -588,7 +588,7 @@ void  itoa ( unsigned int value, char * str){
 
 // Cria umk pontero para o head de uma lista simplesmente encadeada
 PONT iniListaEncAluno(void){
-	PONT head;
+	PONT head;  //head tail
     head = (PONT) malloc(sizeof(NOALUNO)); // Neste nó não guardamos informação
 	head->prox = NULL; // A lista esta vazia
 	return head;
@@ -596,7 +596,7 @@ PONT iniListaEncAluno(void){
 
 // Criando uma lista simplesmente encadeada com base numa lista sequencial
 PONT conListSeq2ListEnc(tListAlunos* listaS){
-	PONT head = NULL, tail; 
+	PONT head, tail; 
 	head = iniListaEncAluno(); //Criamos uma lsita encadeada vazia
 	if (listaS->tam > 0){ // Se a lista seq não estiver vazia 
 		tail = head;
@@ -643,12 +643,15 @@ PONT buscaListaEncNaoOrdAluno(PONT head, char chave[10]){
 			break;
 		tail = tail->prox;
 	}
-	return tail->prox;
+	//return tail->prox;
+	return tail; 
 }
 
 void ini_tListEncAlunos(tListEncAlunos* lista){
 	lista->head = iniListaEncAluno();
 	lista->tail = iniListaEncAluno();
+	lista->tam = 0;
+	strcpy(lista->tail->numMatricula, "999999999"); // Para listas ordenadas
 	lista->head->prox = lista->tail; // Lista vazia head.prox = tail 
 }
 
@@ -660,18 +663,127 @@ PONT busca_tListEncAlunos(tListEncAlunos lista, char chave[10]){
 	while(strcmp(tail->prox->numMatricula, chave) != 0){
 		tail = tail->prox;
 	}
-	if (tail->prox == lista.tail){
-		return NULL;
-	}else{
-		return tail->prox;
+	return tail;
+}
+
+int inc_tListEncAlunos(tAluno aluno, tListEncAlunos* lista){
+	PONT no = busca_tListEncAlunos(*lista, aluno.numMatricula);
+	if (no->prox == lista->tail){ // o aluno não esta na lista
+		PONT novo = iniListaEncAluno(); //Criando um novo no
+		strcpy(novo->numMatricula, aluno.numMatricula); 
+		strcpy(novo->nome, aluno.nome); // copia aluno para o novo no
+		strcpy(novo->email, aluno.email);
+		novo->prox = lista->tail; // o novo no aponta para o tail
+		no->prox = novo; // último agora aponta para o novo
+		//lista->tam++;
+		return TRUE;
 	}
+	return FALSE; // aluno já esta na lista
 }
 
-int inc_tListEncAlunos(tListEncAlunos lista, tAluno aluno){
-
-
+int rem_tListEncAlunos(tAluno aluno, tListEncAlunos* lista){
+	//if(lista->head->prox == lista->tail)
+	//	return FALSE; //lista esta vazia
+	PONT no = busca_tListEncAlunos(*lista, aluno.numMatricula);
+	if (no->prox != lista->tail){ // o aluno esta na lista
+		PONT exc = no->prox; // no a ser excluido
+		no->prox = exc->prox; // anterior aponta para proximo
+		free(exc); // livera memória
+		//lista->tam--;
+		return TRUE;
+	}
+	return FALSE; // aluno não esta na lista
 }
 
+PONT buscaOrd_tListEncAlunos(tListEncAlunos lista, char chave[10], int* achou){
+
+	PONT tail = lista.head;
+	int com = strcmp(tail->prox->numMatricula, chave);
+	while(com < 0){
+		tail = tail->prox;
+		com = strcmp(tail->prox->numMatricula, chave);
+	}
+	*achou = (com == 0); 
+	return tail;
+}
+
+int incOrd_tListEncAlunos(tAluno aluno, tListEncAlunos* lista){
+	int achou;
+	//PONT no = buscaOrd_tListEncAlunos(*lista, aluno.numMatricula, &achou);
+	PONT no = buscaBin_tListEncAlunos(*lista, aluno.numMatricula, &achou);
+	if(!achou){ // o aluno não esta na lista
+		PONT novo = iniListaEncAluno(); //Criando um novo no
+		strcpy(novo->numMatricula, aluno.numMatricula); 
+		strcpy(novo->nome, aluno.nome); // copia aluno para o novo no
+		strcpy(novo->email, aluno.email);
+		novo->prox = no->prox; // o novo no aponta para o proximo
+		no->prox = novo; // último agora aponta para o novo
+		lista->tam++;
+		return TRUE;
+	}
+	return FALSE; // aluno já esta na lista
+}
+
+int remOrd_tListEncAlunos(tAluno aluno, tListEncAlunos* lista){
+	int achou;
+	//if(lista->head->prox == lista->tail)
+	//	return FALSE; //lista esta vazia
+	//PONT no = buscaOrd_tListEncAlunos(*lista, aluno.numMatricula, &achou);
+	PONT no = buscaBin_tListEncAlunos(*lista, aluno.numMatricula, &achou);
+	if (achou){ // o aluno esta na lista
+		PONT exc = no->prox; // no a ser excluido
+		no->prox = exc->prox; // anterior aponta para proximo
+		free(exc); // livera memória
+		lista->tam--;
+		return TRUE;
+	}
+	return FALSE; // aluno não esta na lista
+}
+
+PONT getAluno(int n, tListEncAlunos lista){
+	PONT tail = lista.head;
+	if(n >= lista.tam){
+		return NULL;
+	}
+	for(int i = 0; i < n; i++){
+		tail = tail->prox;
+	}
+	return tail;
+}
+
+PONT buscaBin_tListEncAlunos(tListEncAlunos lista, char chave[10], int* achou)
+{	
+	int min = 0;
+	int max = lista.tam;
+	int i;
+	*achou = FALSE;
+	PONT aluno = lista.head;
+	while (min != max)
+	{	
+		i = (max + min) / 2;
+		aluno = getAluno(i, lista);
+		int com = strcmp(aluno->prox->numMatricula, chave);
+		if (com < 0)
+		{
+			min = ++i;
+			//lista.head = aluno;
+			aluno = aluno->prox;
+		}
+		else
+		{
+			if (com > 0)
+			{
+				max = i;
+			}
+			else
+			{
+				*achou = TRUE;
+				return aluno;
+			}
+		}
+	}
+	return aluno;
+}
 
 
 /*

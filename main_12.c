@@ -5,7 +5,8 @@
 
 #include "include/ferramentas.h"
 
-#define LSIZE 1000
+#define LSIZE 10
+//#define LSIZE 1000
 //#define LSIZE 10000
 //#define LSIZE 100000
 
@@ -73,7 +74,7 @@ int main(void){
 	for(index = 0; index<LSIZE; index++){
         // Procurar o elemento index
 		aluno = buscaListaEncNaoOrdAluno(listaEncNaoOrd, lista.lista[index].numMatricula);
-		if(aluno != NULL){ // se esta na lista 
+		if(aluno->prox != NULL){ // se esta na lista 
 			qIn++; // conta que achou
 		}else{ // caso contrario 
 			qOut++; // conta que não achou 
@@ -109,7 +110,7 @@ int main(void){
 	for(index = 0; index<LSIZE; index++){
         // Procurar o elemento index
         aluno = busca_tListEncAlunos(listaEncNaoOrd2, lista.lista[index].numMatricula);
-		if(aluno != NULL){ // se esta na lista 
+		if(aluno->prox != listaEncNaoOrd2.tail){ // se esta na lista 
 			qIn++; // conta que achou
 		}else{ // caso contrario 
 			qOut++; // conta que não achou 

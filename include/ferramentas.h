@@ -66,13 +66,32 @@ void printListaEncAluno(PONT head);
 PONT buscaListaEncNaoOrdAluno(PONT head, char chave[10]);
 
 typedef struct{
-	PONT head;
-	PONT tail;
+	PONT head; //ini
+	PONT tail; //fim
+	int tam;
 }tListEncAlunos;
 
 void ini_tListEncAlunos(tListEncAlunos* lista);
 void printListaEncAluno2(tListEncAlunos lista);
 PONT busca_tListEncAlunos(tListEncAlunos lista, char chave[10]);
+int inc_tListEncAlunos(tAluno aluno, tListEncAlunos* lista);
+int rem_tListEncAlunos(tAluno aluno, tListEncAlunos* lista);
+PONT buscaOrd_tListEncAlunos(tListEncAlunos lista, char chave[10], int* achou);
+int incOrd_tListEncAlunos(tAluno aluno, tListEncAlunos* lista);
+int remOrd_tListEncAlunos(tAluno aluno, tListEncAlunos* lista);
+PONT getAluno(int n, tListEncAlunos lista);
+PONT buscaBin_tListEncAlunos(tListEncAlunos lista, char chave[10], int* achou);
+
+struct noALuno2{
+	char numMatricula[10];  //chave com 9 caracteres
+    char nome[100];         // nome com até 99 caracteres
+    char email[100];        // eMail com até 99 caracteres
+	struct noALuno2 *ant;
+	struct noALuno2 *prox;
+};
+
+typedef struct noALuno2 NOALUNOD;
+typedef NOALUNOD *PONTD;
 
 /*
 PONT conListSeq2ListEnc_R(tListAlunos* listaS);

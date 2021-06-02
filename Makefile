@@ -4,7 +4,7 @@ CFLAGS = -O2 -lm -fopenmp
 all: 	./bin/exemplo_00 ./bin/exemplo_01 ./bin/exemplo_02 ./bin/exemplo_03 \
 		./bin/exemplo_04 ./bin/exemplo_05 ./bin/exemplo_06 ./bin/exemplo_07 \
 		./bin/exemplo_08 ./bin/exemplo_09 ./bin/exemplo_10 ./bin/exemplo_11 \
-		./bin/exemplo_12
+		./bin/exemplo_12 ./bin/exemplo_13
 
 run: all
 	./bin/exemplo_09
@@ -60,6 +60,10 @@ run: all
 ./bin/exemplo_12: main_12.c ./bin/ferramentas.o
 	$(CC) $(CFLAGS) -I ./include -c main_12.c -o ./bin/main_12.o
 	$(CC) $(CFLAGS)  ./bin/ferramentas.o ./bin/main_12.o -o ./bin/exemplo_12
+
+./bin/exemplo_13: main_13.c ./bin/ferramentas.o
+	$(CC) $(CFLAGS) -I ./include -c main_13.c -o ./bin/main_13.o
+	$(CC) $(CFLAGS)  ./bin/ferramentas.o ./bin/main_13.o -o ./bin/exemplo_13
 
 ./bin/ferramentas.o: ferramentas.c
 	$(CC) $(CFLAGS) -I ./include -c ferramentas.c -o ./bin/ferramentas.o 
